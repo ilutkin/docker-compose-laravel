@@ -7,32 +7,27 @@ services:
   site:
     build:
       context: ./dockerfiles
-      dockerfile: nginx.dockerfile
-      args:
-        - UID=${UID:-1000}
-        - GID=${GID:-1000}
+      dockerfile: nginx.root.dockerfile
     container_name: nginx
     ports:
       - 80:80
     volumes:
-      - ./../src:/var/www/html:delegated
+      - ./src:/var/www/html:delegated
     depends_on:
       - php
       - redis
       - mysql
       - mailhog
-      - phpmyadmin
     networks:
       - laravel
 
   mysql:
     image: mariadb:10.6
     container_name: mysql
+    restart: unless-stopped
     tty: true
     ports:
       - 3306:3306
-    volumes:
-      - ./mysql:/var/lib/mysql
     environment:
       MYSQL_DATABASE: homestead
       MYSQL_USER: homestead
@@ -43,56 +38,34 @@ services:
     networks:
       - laravel
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    links:
-      - mysql:db
-    ports:
-      - 9090:80
-    environment:
-      MYSQL_ROOT_PASSWORD: secret
-      UPLOAD_LIMIT: 100M
-    depends_on:
-      - mysql
-    networks:
-      - laravel
-
   php:
     build:
       context: ./dockerfiles
-      dockerfile: php.dockerfile
-      args:
-        - UID=${UID:-1000}
-        - GID=${GID:-1000}
+      dockerfile: php.root.dockerfile
     container_name: php
     volumes:
-      - ./../src:/var/www/html:delegated
+      - ./src:/var/www/html:delegated
     networks:
       - laravel
 
   redis:
     image: redis:alpine
     container_name: redis
+    restart: unless-stopped
     ports:
       - 6379:6379
     networks:
       - laravel
 
   composer:
-    build:
-      context: ./dockerfiles
-      dockerfile: composer.dockerfile
-      args:
-        - UID=${UID:-1000}
-        - GID=${GID:-1000}
+    image: composer:2
     container_name: composer
     volumes:
-      - ./../src:/var/www/html
+      - ./src:/var/www/html
     working_dir: /var/www/html
     depends_on:
       - php
-    user: laravel
+    user: root
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
       - laravel
@@ -101,7 +74,7 @@ services:
     image: node:13.7
     container_name: npm
     volumes:
-      - ./../src:/var/www/html
+      - ./src:/var/www/html
     ports:
       - 3000:3000
       - 3001:3001
@@ -113,13 +86,10 @@ services:
   artisan:
     build:
       context: ./dockerfiles
-      dockerfile: php.dockerfile
-      args:
-        - UID=${UID:-1000}
-        - GID=${GID:-1000}
+      dockerfile: php.root.dockerfile
     container_name: artisan
     volumes:
-      - ./../src:/var/www/html:delegated
+      - ./src:/var/www/html:delegated
     depends_on:
       - mysql
     working_dir: /var/www/html
