@@ -1,7 +1,7 @@
 # docker-compose-laravel
 Довольно упрощенный рабочий процесс Docker Compose, который настраивает сеть контейнеров LEMP для локальной разработки Laravel. Вы можете просмотреть полную статью, которая послужила вдохновением для этого репо [здесь] (https://dev.to/aschmelyun/the-beauty-of-docker-for-local-laravel-development-13c0).
 
-## Differences
+## Различия
 
 Является ответвлением aschmelyun/docker-compose-laravel
 
@@ -12,7 +12,7 @@
 - Добавлен phpMyAdmin
 - Настройки для пользователя root
 
-## Usage
+## Подготовка
 
 Для начала убедитесь, что в вашей системе установлен Docker.
 
@@ -34,7 +34,9 @@
 
 В файлах `./<you project name>/docker/docker-compose.yml` и `./<you project name>/docker/.env` замените `project` на название вашего проекта.
 
-Затем перейдите в своем терминале в каталог `./<you project name>/docker` и разверните контейнеры для веб-сервера, запустив `docker-compose up -d --build <you project name>`.
+## Использование
+
+Перейдите в своем терминале в каталог `./<you project name>/docker` и разверните контейнеры для веб-сервера, запустив `docker-compose up -d --build <you project name>`.
 
 Запуск сети Docker Compose с помощью `<you project name>` вместо простого` up` гарантирует, что в начале будут запущены только контейнеры нашего сайта, а не все контейнеры команд. Следующие компоненты созданы для нашего веб-сервера с подробным описанием их открытых портов:
 
@@ -42,8 +44,8 @@
 - **mysql** - `:3306`
 - **php** - `:9000`
 - **redis** - `:6379`
-- **mailhog** - `:8025` 
-- **phpmyadmin** - `:9090` 
+- **mailhog** - `:8025`
+- **phpmyadmin** - `:9090`
 
 Включены три дополнительных контейнера, которые обрабатывают команды Composer, NPM и Artisan без необходимости установки этих платформ на вашем локальном компьютере. Используйте следующие примеры команд из корня вашего проекта, изменяя их в соответствии с вашим конкретным вариантом использования.
 
@@ -51,7 +53,7 @@
 - `docker-compose run --rm npm run dev`
 - `docker-compose run --rm artisan migrate`
 
-## Installation Laravel project
+## Установка проекта Laravel
 
 После клонирования или копирования вашего проекта в `./<you project name>/<you project name>`
 
@@ -78,6 +80,7 @@ MAIL_FROM_ADDRESS=null
 - Установите ключ приложения `docker-compose run --rm artisan key:generate`
 - Выполните миграции `docker-compose run --rm artisan migrate`
 - Запустите наполнители `docker-compose run --rm artisan db:seed`
+- При необходимости установите зависимости node_modules `docker-compose run --rm npm install`
 
 ## phpMyAdmin
 
