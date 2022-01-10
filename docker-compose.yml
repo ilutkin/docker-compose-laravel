@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  laravel:
+  project:
 
 services:
   project:
@@ -42,7 +42,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: project_phpmyadmin
     links:
       - mysql:db
     ports:
