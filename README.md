@@ -53,6 +53,8 @@
 - `docker-compose run --rm npm run dev`
 - `docker-compose run --rm artisan migrate`
 
+Что бы пересобрать контейнеры, запустите `docker-compose build --no-cache`
+
 ## Установка проекта Laravel
 
 После клонирования или копирования вашего проекта в `./<you project name>/<you project name>`
