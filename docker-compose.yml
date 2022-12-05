@@ -10,7 +10,7 @@ services:
       dockerfile: nginx.root.dockerfile
     container_name: project_nginx
     ports:
-      - 80:80
+      - "80:80"
     volumes:
       - ./../project:/var/www/html:delegated
     depends_on:
@@ -27,7 +27,7 @@ services:
     container_name: project_mysql
     tty: true
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - ./mysql:/var/lib/mysql
     environment:
@@ -60,6 +60,8 @@ services:
       context: ./dockerfiles
       dockerfile: php.root.dockerfile
     container_name: project_php
+    ports:
+      - "9000:9000"
     volumes:
       - ./../project:/var/www/html:delegated
     networks:
@@ -69,7 +71,7 @@ services:
 #    image: redis:alpine
 #    container_name: project_redis
 #    ports:
-#      - 6379:6379
+#      - "6379:6379"
 #    networks:
 #      - project
 
@@ -91,10 +93,11 @@ services:
     volumes:
       - ./../project:/var/www/html
     ports:
-      - 3000:3000
-      - 3001:3001
+      - "3000:3000"
+      - "3001:3001"
+      - "5173:5173"
     working_dir: /var/www/html
-    entrypoint: ['npm']
+    entrypoint: [ 'npm' ]
     networks:
       - project
 
@@ -116,7 +119,7 @@ services:
     image: mailhog/mailhog:latest
     container_name: project_mailhog
     ports:
-      - 1025:1025
-      - 8025:8025
+      - "1025:1025"
+      - "8025:8025"
     networks:
       - project
