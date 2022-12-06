@@ -76,7 +76,9 @@ services:
 #      - project
 
   composer:
-    image: composer:2
+    build:
+      context: ./dockerfiles
+      dockerfile: php.root.dockerfile
     container_name: project_composer
     volumes:
       - ./../project:/var/www/html

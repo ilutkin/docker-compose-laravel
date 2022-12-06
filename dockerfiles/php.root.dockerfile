@@ -1,4 +1,4 @@
-FROM php:8-fpm-alpine
+FROM php:8.1.2-fpm-alpine
 
 RUN mkdir -p /var/www/html
 
@@ -26,6 +26,7 @@ RUN apk add --no-cache \
       --with-jpeg=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-enable gd \
+    && docker-php-ext-install bcmath\
     && apk del --no-cache \
       freetype-dev \
       libjpeg-turbo-dev \
