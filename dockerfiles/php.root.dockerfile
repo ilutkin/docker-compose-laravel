@@ -1,4 +1,4 @@
-FROM php:8.1.2-fpm-alpine
+FROM php:8.1.6-fpm-alpine
 
 RUN mkdir -p /var/www/html
 
