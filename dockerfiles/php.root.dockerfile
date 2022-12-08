@@ -10,6 +10,8 @@ RUN sed -i "s/user = www-data/user = root/g" /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i "s/group = www-data/group = root/g" /usr/local/etc/php-fpm.d/www.conf
 RUN echo "php_admin_flag[log_errors] = on" >> /usr/local/etc/php-fpm.d/www.conf
 
+COPY ./php/php.ini /usr/local/etc/php
+
 RUN docker-php-ext-install pdo pdo_mysql
 
 # Setup GD extension
