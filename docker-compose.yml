@@ -37,6 +37,7 @@ services:
       MYSQL_ROOT_PASSWORD: secret
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+      TZ: Europe/Moscow
     networks:
       - project
 
